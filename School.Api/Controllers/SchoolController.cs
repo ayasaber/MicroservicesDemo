@@ -18,7 +18,7 @@ namespace Schools.Api.Controllers
         private readonly IBaseService<School.Domain.Models.School> _baseService;
         private readonly SchoolDbContext _SchoolDbContext;
         private readonly ILogger<SchoolController> _logger;
-        //private readonly ICacheManager _cacheManager;
+        private readonly ICacheManager _cacheManager;
 
         public SchoolController(IBaseService<School.Domain.Models.School> customService, SchoolDbContext SchoolDbContext, ILogger<SchoolController> logger)//, ICacheManager cacheManager)
         {
