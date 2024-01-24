@@ -10,6 +10,7 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.60.0" />
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.60.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.60.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.15">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,10 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Caching\Caching.csproj" />
     <ProjectReference Include="..\Common.Repository\Repository.csproj" />
     <ProjectReference Include="..\Common.Service\Service.csproj" />
-    <ProjectReference Include="..\Logging\Logging.csproj" />
     <ProjectReference Include="..\School.Domain\School.Domain.csproj" />
     <ProjectReference Include="..\School.Service\School.Service.csproj" />
   </ItemGroup>

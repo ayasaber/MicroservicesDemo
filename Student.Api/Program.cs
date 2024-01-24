@@ -5,6 +5,7 @@ using Common.Repository.Repository;
 using Student.Service.IServices;
 using Student.Service.Services;
 using Common.Service.IServices;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IBaseService<Student.Domain.Models.Student>, StudentS
 builder.Services.AddDbContext<StudentDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnections")));
 builder.Services.AddGrpc();
+builder.Services.AddMediatR(typeof(Program).Assembly,
+                             typeof(Program).Assembly);
 #endregion
 var app = builder.Build();
 // Configure the HTTP request pipeline.
