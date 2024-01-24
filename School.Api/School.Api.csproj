@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Common.Repository\Repository.csproj" />
     <ProjectReference Include="..\Common.Service\Service.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
+    <ProjectReference Include="..\Notifications\Notifications.csproj" />
     <ProjectReference Include="..\School.Domain\School.Domain.csproj" />
     <ProjectReference Include="..\School.Service\School.Service.csproj" />
   </ItemGroup>

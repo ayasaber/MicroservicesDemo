@@ -7,6 +7,8 @@ using Grpc.Core;
 using Logging.LogRequestResponse;
 using Caching.Redis;
 using Caching;
+using Notifications.Services;
+using Notifications.Entities;
 
 namespace Schools.Api.Controllers
 {
@@ -18,18 +20,20 @@ namespace Schools.Api.Controllers
         private readonly IBaseService<School.Domain.Models.School> _baseService;
         private readonly SchoolDbContext _SchoolDbContext;
         private readonly ILogger<SchoolController> _logger;
+        private readonly NotificationService _notificationService;
         //private readonly ICacheManager _cacheManager;
 
-        public SchoolController(IBaseService<School.Domain.Models.School> customService, SchoolDbContext SchoolDbContext, ILogger<SchoolController> logger)//, ICacheManager cacheManager)
+        public SchoolController(IBaseService<School.Domain.Models.School> customService, SchoolDbContext SchoolDbContext, ILogger<SchoolController> logger, NotificationService notificationService)//, ICacheManager cacheManager)
         {
             _baseService = customService;
             _SchoolDbContext = SchoolDbContext;
             _logger = logger;
+            _notificationService = notificationService;
             //_cacheManager = cacheManager;
         }
 
         [HttpGet(nameof(GetAllSchool))]
-        public IActionResult GetAllSchool()
+        public async Task<IActionResult> GetAllSchool()
         {
             _logger.LogInformation("Start with GetAllSchool");
             try
@@ -39,7 +43,14 @@ namespace Schools.Api.Controllers
                 //{
                 //    _cacheManager.AddString("serviceId", "School");
                 //}
-
+                var sms = new Notifications.Models.SMSModel()
+                {
+                 Message="hey",
+                 RecieverMobile="009w37",
+                 Subject="test sub",
+                 SenderMobile="99999"
+                };
+                 _notificationService.SendSMS(sms);
 
                 var obj = _baseService.GetAll();
                 if (obj == null)
