@@ -1,6 +1,9 @@
 ﻿using Student.Domain.Data;
 using Microsoft.AspNetCore.Mvc;
 using Common.Service.IServices;
+using MediatR;
+using Student.Api.Query.Student;
+using Student.Api.Command.Student;
 
 namespace Students.Api.Controllers
 {
@@ -9,17 +12,19 @@ namespace Students.Api.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IBaseService<Student.Domain.Models.Student> _baseService;
-		private readonly StudentDbContext _studentDbContext;
-        public StudentsController(IBaseService<Student.Domain.Models.Student> baseService, StudentDbContext studentDbContext)
+        private readonly StudentDbContext _studentDbContext;
+        private readonly IMediator _mediator;
+        public StudentsController(IBaseService<Student.Domain.Models.Student> baseService, StudentDbContext studentDbContext, IMediator mediator)
         {
             _baseService = baseService;
-			_studentDbContext = studentDbContext;
-
-		}
+            _studentDbContext = studentDbContext;
+            _mediator = mediator;
+        }
         [HttpGet(nameof(GetStudentById))]
-        public IActionResult GetStudentById(int Id)
+        public async Task<IActionResult> GetStudentById(int Id)
         {
-            var obj = _baseService.Get(Id);
+            var query = new GetStudentByIdQuery(Id);
+            var obj = await _mediator.Send(query);
             if (obj == null)
             {
                 return NotFound();
@@ -29,10 +34,11 @@ namespace Students.Api.Controllers
                 return Ok(obj);
             }
         }
-        [HttpGet(nameof(GetAllStudent))]
-        public IActionResult GetAllStudent()
+        [HttpGet(nameof(GetAllStudentAsync))]
+        public async Task<IActionResult> GetAllStudentAsync()
         {
-            var obj = _baseService.GetAll();
+            var query = new GetStudentQuery();
+            var obj = await _mediator.Send(query);
             if (obj == null)
             {
                 return NotFound();
@@ -42,12 +48,13 @@ namespace Students.Api.Controllers
                 return Ok(obj);
             }
         }
-        [HttpPost(nameof(CreateStudent))]
-        public IActionResult CreateStudent(Student.Domain.Models.Student student)
+        [HttpPost(nameof(CreateStudentAsync))]
+        public async Task<IActionResult> CreateStudentAsync(Student.Domain.Models.Student student)
         {
             if (student != null)
             {
-                _baseService.Insert(student);
+                var query = new CreateStudentRequest(student);
+                var obj = await _mediator.Send(query);
                 return Ok("Created Successfully");
             }
             else
@@ -55,12 +62,13 @@ namespace Students.Api.Controllers
                 return BadRequest("Somethingwent wrong");
             }
         }
-        [HttpPost(nameof(UpdateStudent))]
-        public IActionResult UpdateStudent(Student.Domain.Models.Student student)
+        [HttpPost(nameof(UpdateStudentAsync))]
+        public async Task<IActionResult> UpdateStudentAsync(Student.Domain.Models.Student student)
         {
             if (student != null)
             {
-                _baseService.Update(student);
+                var query = new UpdateStudentRequest(student);
+                var obj = await _mediator.Send(query);
                 return Ok("Updated SuccessFully");
             }
             else
@@ -68,12 +76,13 @@ namespace Students.Api.Controllers
                 return BadRequest();
             }
         }
-        [HttpDelete(nameof(DeleteStudent))]
-        public IActionResult DeleteStudent(Student.Domain.Models.Student student)
+        [HttpDelete(nameof(DeleteStudentAsync))]
+        public async Task<IActionResult> DeleteStudentAsync(Student.Domain.Models.Student student)
         {
             if (student != null)
             {
-                _baseService.Delete(student);
+                var query = new DeletStudentRequest(student);
+                var obj = await _mediator.Send(query);
                 return Ok("Deleted Successfully");
             }
             else
@@ -81,6 +90,6 @@ namespace Students.Api.Controllers
                 return BadRequest("Something went wrong");
             }
         }
-        
+
     }
 }
