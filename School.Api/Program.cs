@@ -36,6 +36,9 @@ builder.Services.AddScoped<NotificationService>();
 builder.Services.AddDbContext<SchoolDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnections")));
 
+
+builder.Services.AddDbContext<NotificationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnections")));
 builder.Host.UseSerilog();
 
 

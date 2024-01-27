@@ -19,10 +19,7 @@ namespace Notifications.Entities
 
         [MaxLength(50)]
         public string FirstName { get; set; }
-        [MaxLength(50)]
-        public string? SecondName { get; set; }
-        [MaxLength(50)]
-        public string? ThirdName { get; set; }
+
         [MaxLength(50)]
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
