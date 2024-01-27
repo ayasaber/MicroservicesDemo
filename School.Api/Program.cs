@@ -31,11 +31,7 @@ builder.Services.AddScoped<ISMSLogsService, SMSLogsService>();
 builder.Services.AddScoped<IEmailLogsService, EmailLogsService>();
 builder.Services.AddScoped<IWebPushLogsService, WebPushLogsService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-//builder.Services.AddScoped<EmailSettings>();
 builder.Services.AddScoped<NotificationService>();
-
-//builder.Services.AddDbContextPool<NotificationDbContext>(
-//                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnections")));
 
 builder.Services.AddDbContext<SchoolDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnections")));
